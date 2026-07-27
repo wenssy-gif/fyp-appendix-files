@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Malaysia E-Banking Service Quality Dashboard</title>
+
+  <style>
+    :root {
+      --pink: #ff007a;
+      --pink2: #ff4fac;
+      --purple: #7b2cff;
+      --blue: #2f80ff;
+      --cyan: #00d4ff;
+      --yellow: #ffd166;
+      --dark: #10061f;
+      --white: #ffffff;
+      --text: #241431;
+      --muted: #76647f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 8% 12%, rgba(255, 0, 122, 0.36), transparent 28%),
+        radial-gradient(circle at 88% 10%, rgba(47, 128, 255, 0.35), transparent 30%),
+        radial-gradient(circle at 80% 90%, rgba(123, 44, 255, 0.30), transparent 32%),
+        linear-gradient(135deg, #fff3fb, #eef5ff 58%, #fff8ea);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.55;
+      z-index: -1;
+      animation: float 8s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      width: 430px;
+      height: 430px;
+      background: var(--pink);
+      left: -150px;
+      bottom: 70px;
+    }
+
+    .orb.two {
+      width: 460px;
+      height: 460px;
+      background: var(--cyan);
+      right: -170px;
+      top: 100px;
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0) scale(1); }
+      to { transform: translateY(-45px) scale(1.07); }
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 28px 7%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 60px rgba(47, 20, 87, 0.12);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      color: white;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+      box-shadow: 0 12px 28px rgba(255, 0, 122, 0.30);
+    }
+
+    .nav-pill {
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: white;
+      font-size: 14px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 28px rgba(123, 44, 255, 0.25);
+    }
+
+    .hero {
+      flex: 1;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 44px;
+      align-items: center;
+      padding: 50px 0 24px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 15px;
+      border-radius: 999px;
+      color: var(--pink);
+      font-size: 14px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.70);
+      border: 1px solid rgba(255, 0, 122, 0.16);
+      margin-bottom: 20px;
+    }
+
+    .badge span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 18px var(--pink);
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 0.96;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .description {
+      max-width: 660px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      min-height: 54px;
+      padding: 0 25px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      transition: 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+      box-shadow: 0 18px 44px rgba(123, 44, 255, 0.34);
+    }
+
+    .btn-secondary {
+      color: var(--pink);
+      background: white;
+      box-shadow: 0 18px 44px rgba(40, 10, 70, 0.10);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 740px;
+    }
+
+    .info-card {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 18px 44px rgba(40, 10, 70, 0.08);
+    }
+
+    .info-card strong {
+      display: block;
+      font-size: 24px;
+      color: var(--pink);
+      line-height: 1.1;
+      margin-bottom: 5px;
+    }
+
+    .info-card span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .preview-wrap {
+      position: relative;
+      padding: 13px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+      box-shadow: 0 30px 90px rgba(123, 44, 255, 0.25);
+    }
+
+    .preview {
+      border-radius: 25px;
+      overflow: hidden;
+      background: var(--dark);
+      color: white;
+      min-height: 540px;
+    }
+
+    .browser {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 17px;
+      background: rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .browser i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: block;
+      background: #ff5f57;
+    }
+
+    .browser i:nth-child(2) {
+      background: #ffbd2e;
+    }
+
+    .browser i:nth-child(3) {
+      background: #28c840;
+    }
+
+    .browser p {
+      margin-left: 8px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 13px;
+    }
+
+    .mock {
+      padding: 26px;
+    }
+
+    .mock-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .mock-head h2 {
+      font-size: 25px;
+      line-height: 1.1;
+    }
+
+    .mock-head p {
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .status {
+      color: #1b1220;
+      background: var(--yellow);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+      margin-bottom: 15px;
+    }
+
+    .kpi {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.11);
+    }
+
+    .kpi span {
+      color: rgba(255,255,255,0.62);
+      font-size: 12px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .kpi strong {
+      font-size: 25px;
+      color: white;
+    }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.95fr;
+      gap: 15px;
+    }
+
+    .visual {
+      min-height: 225px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.11);
+    }
+
+    .visual h3 {
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    .bars {
+      height: 150px;
+      display: flex;
+      align-items: end;
+      gap: 10px;
+    }
+
+    .bars span {
+      flex: 1;
+      display: block;
+      border-radius: 999px 999px 8px 8px;
+      background: linear-gradient(180deg, var(--cyan), var(--blue), var(--purple), var(--pink));
+    }
+
+    .donut {
+      width: 145px;
+      height: 145px;
+      margin: 15px auto 0;
+      border-radius: 50%;
+      position: relative;
+      background: conic-gradient(var(--pink) 0 42%, var(--purple) 42% 73%, var(--cyan) 73% 100%);
+    }
+
+    .donut::after {
+      content: "Issues";
+      position: absolute;
+      inset: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--dark);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .objectives {
+      margin-top: 15px;
+      display: grid;
+      gap: 11px;
+    }
+
+    .objective {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer-note {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 14px 0 4px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 1050px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 42px;
+      }
+
+      .preview {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .page {
+        padding: 16px 5%;
+      }
+
+      .nav-pill {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+
+      h1 {
+        letter-spacing: -1.4px;
+      }
+
+      .description {
+        font-size: 16.5px;
+      }
+
+      .info-grid,
+      .kpis,
+      .visual-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .preview {
+        min-height: auto;
+      }
+
+      .mock {
+        padding: 20px;
+      }
+
+      .footer-note {
+        padding-bottom: 16px;
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .dashboard-launch-section {
+      width: 100%;
+      max-width: 1180px;
+      margin: 70px auto 30px;
+      padding: 13px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+      box-shadow: 0 30px 90px rgba(123, 44, 255, 0.25);
+    }
+
+    .dashboard-launch-inner {
+      border-radius: 25px;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .dashboard-launch-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-launch-header h2 {
+      font-size: 26px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .dashboard-launch-header p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .live-embed {
+      padding: 9px 13px;
+      border-radius: 999px;
+      color: white;
+      font-size: 12px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      white-space: nowrap;
+    }
+
+    .powerbi-responsive {
+      position: relative;
+      width: 100%;
+      height: 720px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #f4ecff;
+      border: 1px solid rgba(123, 44, 255, 0.14);
+    }
+
+    .powerbi-responsive iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .open-fullscreen {
+      margin-top: 18px;
+      display: inline-flex;
+    }
+
+    @media (max-width: 700px) {
+      .dashboard-launch-section {
+        margin-top: 42px;
+      }
+
+      .dashboard-launch-inner {
+        padding: 18px;
+      }
+
+      .dashboard-launch-header {
+        flex-direction: column;
+      }
+
+      .powerbi-responsive {
+        height: 540px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <main class="page">
+    <nav class="navbar">
+      <a href="#" class="logo">
+        <span class="logo-mark">EB</span>
+        <span>E-Banking Insights</span>
+      </a>
+
+      <a href="#dashboard" class="nav-pill">Launch Dashboard</a>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <div class="badge">
+          <span></span>
+          Published Power BI Dashboard
+        </div>
+
+        <h1>
+          Malaysia <span class="gradient-text">E-Banking Service Quality</span> Dashboard
+        </h1>
+
+        <p class="description">
+          A web-based dashboard that turns customer survey responses into clear insights on
+          service quality, customer satisfaction, issue experience, and improvement priorities
+          for Malaysia e-banking services.
+        </p>
+
+        <div class="actions">
+          <a href="#dashboard" class="btn btn-primary">Launch Dashboard</a>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>426</strong>
+            <span>Valid Responses</span>
+          </div>
+
+          <div class="info-card">
+            <strong>7</strong>
+            <span>Service Dimensions</span>
+          </div>
+
+          <div class="info-card">
+            <strong>4</strong>
+            <span>Dashboard Pages</span>
+          </div>
+
+          <div class="info-card">
+            <strong>BI</strong>
+            <span>Power BI Output</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="preview" class="preview-wrap">
+        <div class="preview">
+          <div class="browser">
+            <i></i><i></i><i></i>
+            <p>e-banking-dashboard.launch</p>
+          </div>
+
+          <div class="mock">
+            <div class="mock-head">
+              <div>
+                <h2>Dashboard Preview</h2>
+                <p>Service quality, satisfaction, and issue insights</p>
+              </div>
+              <span class="status">Ready</span>
+            </div>
+
+            <div class="kpis">
+              <div class="kpi">
+                <span>Total Respondents</span>
+                <strong>426</strong>
+              </div>
+
+              <div class="kpi">
+                <span>Overall Satisfaction</span>
+                <strong>4.08</strong>
+              </div>
+
+              <div class="kpi">
+                <span>Priority Area</span>
+                <strong>WBD</strong>
+              </div>
+            </div>
+
+            <div class="visual-grid">
+              <div class="visual">
+                <h3>Service Quality Score</h3>
+                <div class="bars">
+                  <span style="height:78%"></span>
+                  <span style="height:69%"></span>
+                  <span style="height:84%"></span>
+                  <span style="height:73%"></span>
+                  <span style="height:60%"></span>
+                  <span style="height:66%"></span>
+                  <span style="height:55%"></span>
+                </div>
+              </div>
+
+              <div class="visual">
+                <h3>Issue Hotspot</h3>
+                <div class="donut"></div>
+              </div>
+            </div>
+
+            <div class="objectives">
+              <div class="objective">Objective 1: Examine service quality and customer satisfaction relationships.</div>
+              <div class="objective">Objective 2: Visualise service quality and satisfaction results in Power BI.</div>
+              <div class="objective">Objective 3: Support data-driven improvement recommendations.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="dashboard" class="dashboard-launch-section">
+      <div class="dashboard-launch-inner">
+        <div class="dashboard-launch-header">
+          <div>
+            <h2>Malaysia E-Banking Service Quality Dashboard</h2>
+            <p>Interactive published Power BI dashboard integrated inside the website.</p>
+          </div>
+          <span class="live-embed">Live Embed</span>
+        </div>
+
+        <div class="powerbi-responsive">
+          <iframe
+            title="dashboard"
+            src="https://app.powerbi.com/view?r=eyJrIjoiYjU0NDU2NDItMmI2Yy00Y2UxLTk5NTMtMWU1MmRkZDdkNGI3IiwidCI6IjUzN2MyYmUxLWZjZDQtNDVhOS04M2IzLTY2NTNlYWNjNTA3MCIsImMiOjEwfQ%3D%3D"
+            frameborder="0"
+            allowFullScreen="true">
+          </iframe>
+        </div>
+
+        <a class="btn btn-primary open-fullscreen" href="https://app.powerbi.com/view?r=eyJrIjoiYjU0NDU2NDItMmI2Yy00Y2UxLTk5NTMtMWU1MmRkZDdkNGI3IiwidCI6IjUzN2MyYmUxLWZjZDQtNDVhOS04M2IzLTY2NTNlYWNjNTA3MCIsImMiOjEwfQ%3D%3D" target="_blank">
+          Open Fullscreen Dashboard
+        </a>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Final Year Project: Data-driven web-based service quality analysis for enhancing customer satisfaction in Malaysia e-banking.
+    </p>
+  </main>
+</body>
+</html>
