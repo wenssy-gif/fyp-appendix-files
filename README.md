@@ -25,9 +25,14 @@ Contains exported SPSS results for:
 
 Contains the SPSS syntax used to conduct the statistical analyses.
 
-### HTML Dashboard
 
-Contains the HTML for the web-based dashboard.
+## Malaysia E-Banking Service Quality Dashboard
+
+Click the button below to view the interactive web-based dashboard:
+
+### [Open Interactive Dashboard](https://wenssy-gif.github.io/fyp-appendix-files/malaysia-ebanking-service-quality-analysis/dashboard/)
+
+The dashboard presents customer satisfaction, service quality, problem experience and improvement recommendations for Malaysia e-banking services.
 
 ## Data Privacy
 
